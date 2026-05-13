@@ -151,6 +151,26 @@
             text-align: center;
             padding: 20px;
         }
+        /* Game Container Styling */
+#game {
+    width: 90%;                /* Responsive width */
+    max-width: 800px;         /* Maximum size on desktop */
+    margin: 40px auto;        /* Center on page */
+    padding: 20px;
+    background: #fff;
+    border: 2px solid var(--primary); /* Uses theme primary color */
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    min-height: 300px;        /* Ensures area exists before load */
+    box-sizing: border-box;   /* Includes padding in width */
+}
+
+/* Optional: Make the loaded game iframe/content adaptive */
+#game iframe, #game canvas, #game img {
+    max-width: 100%;
+    height: auto;
+}
+
     </style>
 </head>
 <body>
@@ -158,6 +178,7 @@
     <header>
         <div class="logo">HealthyEating</div>
         <nav>
+             <a href="#game">game</a>
             <a href="#about">About</a>
             <a href="#tips">Tips</a>
             <a href="#recipes">Recipes</a>
@@ -174,15 +195,15 @@
         <h2>Why Choose to Eat Healthy Foods</h2>
         <div class="grid">
             <div class="card">
-                <h3>⚡ Higher Energy</h3>
+                <h3>Higher Energy</h3>
                 <p>Natural foods provide sustained energy without sugar crashes.</p>
             </div>
             <div class="card">
-                <h3>🛡️ Disease Prevention</h3>
+                <h3>Disease Prevention</h3>
                 <p>Nutrient-dense foods strengthen your immune system.</p>
             </div>
             <div class="card">
-                <h3>🧠 Mental Clarity</h3>
+                <h3>Mental Clarity</h3>
                 <p>Good nutrition directly improves focus and mood.</p>
             </div>
         </div>
@@ -218,6 +239,16 @@
             </div>
         </div>
     </section>
+        <section id="game">
+<div id="game"></div>
+<script>
+  fetch('healthy eating game.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('header-placeholder').innerHTML = data;
+    });
+</script>
+         </section>
 
     <section class="sources">
         <h3>Sources & Further Reading</h3>
@@ -231,6 +262,8 @@
     <footer>
         <p>&copy; 2026 Healthy Eating Advocacy. Choose Health.</p>
     </footer>
+ 
+
 
 </body>
 </html>
