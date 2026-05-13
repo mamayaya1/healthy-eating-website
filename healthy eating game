@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthy Eating Game</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e0f7fa;
+            margin: 0;
+            overflow: hidden;
+        }
+        #game-area {
+            width: 100vw;
+            height: 80vh;
+            background-color: white;
+            position: relative;
+            border-bottom: 5px solid #00796b;
+            overflow: hidden;
+        }
+        #player {
+            width: 60px;
+            height: 60px;
+            background-color: #00796b;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            border-radius: 10px;
+            transform: translateX(-50%);
+        }
+        .food {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            font-size: 30px;
+            line-height: 40px;
+        }
+        #score-board {
+            font-size: 24px;
+            margin: 10px;
+            color: #004d40;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="score-board">Score: <span id="score">0</span> | Time: <span id="time">30</span>s</div>
+    <div id="game-area">
+        <div id="player"></div>
+    </div>
+    <p>Use Left/Right Arrows to move. Catch Healthy food (🍏🍓), avoid Unhealthy (🍩🍕)!</p>
+
+    <script>
+        const player = document.getElementById('player');
+        const gameArea = document.getElementById('game-area');
+        const scoreEl = document.getElementById('score');
+        const timeEl = document.getElementById('time');
+        
+        let score = 0;
+        let time = 30;
+        let playerX = window.innerWidth / 2;
+        let gameActive = true;
+
+        // Food definitions
+        const healthyFoods = ['🍎', '🍏', '🍓', '🥕', '🥦', '🍌'];
+        const unhealthyFoods = ['🍩', '🍕', '🍟', '🍔', '🍦'];
+
+        // Movement
+        document.addEventListener('keydown', (e) => {
+            if (!gameActive) return;
+            if (e.key === 'ArrowLeft' && playerX > 30) playerX -= 20;
+            if (e.key === 'ArrowRight' && playerX < window.innerWidth - 30) playerX += 20;
+            player.style.left = playerX + 'px';
+        });
+
+        // Spawn Food
+        function spawnFood() {
+            if (!gameActive) return;
+            const food = document.createElement('div');
+            food.classList.add('food');
+            
+            // Randomly pick healthy or unhealthy
+            const isHealthy = Math.random() > 0.4; // 60% chance healthy
+            const foodItems = isHealthy ? healthyFoods : unhealthyFoods;
+            food.innerText = foodItems[Math.floor(Math.random() * foodItems.length)];
+            food.dataset.type = isHealthy ? 'healthy' : 'unhealthy';
+
+            food.style.left = Math.random() * (window.innerWidth - 40) + 'px';
+            food.style.top = '-50px';
+            gameArea.appendChild(food);
+
+            // Move Food
+            let foodY = -50;
+            let foodInterval = setInterval(() => {
+                if (!gameActive) {
+                    clearInterval(foodInterval);
+                    return;
+                }
+                foodY += 5;
+                food.style.top = foodY + 'px';
+
+                // Check collision
+                if (foodY > (gameArea.offsetHeight - 70) && 
+                    parseInt(food.style.left) > playerX - 50 && 
+                    parseInt(food.style.left) < playerX + 10) {
+                    
+                    if (food.dataset.type === 'healthy') {
+                        score++;
+                    } else {
+                        score--;
+                    }
+                    scoreEl.innerText = score;
+                    clearInterval(foodInterval);
+                    food.remove();
+                }
+
+                // Remove off-screen food
+                if (foodY > gameArea.offsetHeight) {
+                    clearInterval(foodInterval);
+                    food.remove();
+                }
+            }, 20);
+
+            // Spawn next food faster
+            setTimeout(spawnFood, 1000);
+        }
+
+        // Game Timer
+        let timerInterval = setInterval(() => {
+            time--;
+            timeEl.innerText = time;
+            if (time <= 0) {
+                gameActive = false;
+                clearInterval(timerInterval);
+                alert('Game Over! Your score: ' + score);
+            }
+        }, 1000);
+
+        spawnFood();
+    </script>
+</body>
+</html>
