@@ -147,29 +147,31 @@
 
         #tips { background-color: var(--light); }
 
-        .tip-list {
-            max-width: 700px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: var(--shadow);
-        }
+       .tip-list {
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+    background: white;
+    padding: 40px 20px;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+}
+
 
         .tip-list ul { list-style: none; padding: 0; }
 
-        .tip-list li {
-            padding: 12px 0;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            align-items: center;
-        }
+       .tip-list li {
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+    display: block;
+    font-size: 1.1rem;
+}
 
         .tip-list li::before {
             content: '✓';
             color: var(--primary);
             font-weight: bold;
-            margin-right: 15px;
+            margin-right: 10px;
         }
 
         .recipe-card {
