@@ -8,48 +8,55 @@
         :root {
             --primary: #2ecc71;
             --dark: #27ae60;
-            --light: #ecf0f1;
-            --text: #333;
-            --transition: all 0.3s ease;
+            --accent: #e74c3c;
+            --light: #f8f9fa;
+            --text: #2d3436;
+            --shadow: 0 4px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
+        * { box-sizing: border-box; }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             color: var(--text);
-            line-height: 1.6;
-            /* Animation for page load */
-            animation: fadeIn 1s ease-in;
+            line-height: 1.7;
+            background-color: #fff;
+            animation: fadeIn 0.8s ease-out;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         header {
-            background: #fff;
+            background: rgba(255, 255, 255, 0.95);
             padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
             position: sticky;
             top: 0;
             z-index: 1000;
+            backdrop-filter: blur(10px);
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary);
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--dark);
+            letter-spacing: -0.5px;
         }
 
         nav a {
-            margin-left: 20px;
+            margin-left: 25px;
             text-decoration: none;
             color: var(--text);
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 0.95rem;
             transition: var(--transition);
         }
 
@@ -58,212 +65,251 @@
         }
 
         .hero {
-            background: var(--light);
-            padding: 80px 5%;
+            background: linear-gradient(135deg, #f1fcf5 0%, #f8f9fa 100%);
+            padding: 100px 5%;
             text-align: center;
         }
 
         .hero h1 {
-            font-size: 2.5rem;
-            color: var(--dark);
-            margin-bottom: 10px;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: #2c3e50;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            color: #636e72;
         }
 
         .btn {
             background: var(--primary);
             color: #fff;
-            padding: 10px 20px;
+            padding: 14px 32px;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 50px;
             display: inline-block;
-            margin-top: 20px;
+            font-weight: 600;
             transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
         }
 
         .btn:hover {
             background: var(--dark);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
         }
 
-        section {
-            padding: 60px 5%;
-        }
+        section { padding: 80px 5%; }
 
         h2 {
             text-align: center;
-            color: var(--dark);
-            margin-bottom: 40px;
+            color: #2c3e50;
+            margin-bottom: 50px;
+            font-size: 2.2rem;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 4px;
+            background: var(--primary);
+            margin: 10px auto;
+            border-radius: 2px;
         }
 
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            gap: 30px;
         }
 
         .card {
             background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #eee;
+            padding: 40px 30px;
+            border-radius: 15px;
+            border: 1px solid #f0f0f0;
             text-align: center;
             transition: var(--transition);
+            box-shadow: var(--shadow);
         }
 
-        /* Card Hover Animation */
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transform: translateY(-10px);
             border-color: var(--primary);
         }
 
-        #tips {
-            background-color: #f9f9f9;
-        }
+        .card h3 { color: var(--dark); margin-bottom: 15px; }
+
+        #tips { background-color: var(--light); }
 
         .tip-list {
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto;
             background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .tip-list ul { list-style: none; padding: 0; }
+
+        .tip-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+
+        .tip-list li::before {
+            content: '✓';
+            color: var(--primary);
+            font-weight: bold;
+            margin-right: 15px;
         }
 
         .recipe-card {
-            border-left: 4px solid var(--primary);
+            border-top: 5px solid var(--primary);
+            text-align: left;
+        }
+
+        /* Game Section Fix */
+        .game-section { text-align: center; background: #fff; }
+        #game-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f1fcf5;
+            border: 2px dashed var(--primary);
+            border-radius: 20px;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .sources {
-            background: #333;
-            color: #fff;
-            padding: 30px 5%;
-            font-size: 0.9rem;
+            background: #2d3436;
+            color: #dfe6e9;
+            padding: 60px 5%;
         }
 
-        .sources a {
-            color: var(--primary);
-        }
+        .sources a { color: var(--primary); text-decoration: none; font-weight: bold; }
+        .sources a:hover { text-decoration: underline; }
 
         footer {
-            background: #2c3e50;
+            background: #1e272e;
             color: #fff;
             text-align: center;
-            padding: 20px;
+            padding: 30px;
+            font-size: 0.9rem;
+            border-top: 1px solid #34495e;
         }
-        /* Game Container Styling */
-#game {
-    width: 90%;                /* Responsive width */
-    max-width: 800px;         /* Maximum size on desktop */
-    margin: 40px auto;        /* Center on page */
-    padding: 20px;
-    background: #fff;
-    border: 2px solid var(--primary); /* Uses theme primary color */
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    min-height: 300px;        /* Ensures area exists before load */
-    box-sizing: border-box;   /* Includes padding in width */
-}
-
-/* Optional: Make the loaded game iframe/content adaptive */
-#game iframe, #game canvas, #game img {
-    max-width: 100%;
-    height: auto;
-}
-
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">HealthyEating</div>
-        <nav>
-             <a href="#game">game</a>
-            <a href="#about">About</a>
-            <a href="#tips">Tips</a>
-            <a href="#recipes">Recipes</a>
-        </nav>
-    </header>
+<header>
+    <div class="logo">🥗 HealthyEating</div>
+    <nav>
+        <a href="#about">About</a>
+        <a href="#tips">Tips</a>
+        <a href="#recipes">Recipes</a>
+        <a href="#game">Game</a>
+    </nav>
+</header>
 
-    <section class="hero">
-        <h1>Fuel Your Body, Empower Your Life</h1>
-        <p>Join us in advocating for a healthier, more vibrant lifestyle through conscious eating.</p>
-        <a href="#about" class="btn">Learn More</a>
-    </section>
+<section class="hero">
+    <h1>Fuel Your Body,<br>Empower Your Life</h1>
+    <p>Join us in advocating for a healthier, more vibrant lifestyle through conscious eating and sustainable habits.</p>
+    <a href="#about" class="btn">Explore Benefits</a>
+</section>
 
-    <section id="about">
-        <h2>Why Choose to Eat Healthy Foods</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>Higher Energy</h3>
-                <p>Natural foods provide sustained energy without sugar crashes.</p>
-            </div>
-            <div class="card">
-                <h3>Disease Prevention</h3>
-                <p>Nutrient-dense foods strengthen your immune system.</p>
-            </div>
-            <div class="card">
-                <h3>Mental Clarity</h3>
-                <p>Good nutrition directly improves focus and mood.</p>
-            </div>
+<section id="about">
+    <h2>Why Eat Healthy?</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>Higher Energy</h3>
+            <p>Natural, whole foods provide sustained fuel without the midday sugar crashes.</p>
         </div>
-    </section>
-
-    <section id="tips">
-        <h2>Simple Daily Tips</h2>
-        <div class="tip-list">
-            <ul>
-                <li>Start your day with a glass of lemon water.</li>
-                <li>Aim for 3 different colors of vegetables at lunch.</li>
-                <li>Swap sugary snacks for raw nuts or fruit.</li>
-                <li>Drink at least 2 liters of water daily.</li>
-                <li>Prep healthy snacks on Sunday to avoid fast food.</li>
-            </ul>
+        <div class="card">
+            <h3>Stronger Immunity</h3>
+            <p>Nutrient-dense foods provide the vitamins needed to fight off illness effectively.</p>
         </div>
-    </section>
-    
-    <section id="recipes">
-        <h2>Quick & Healthy Recipe Spot</h2>
-        <div class="grid">
-            <div class="card recipe-card">
-                <h3>Green Smoothie</h3>
-                <p>Spinach, banana, chia seeds, and almond milk.</p>
-            </div>
-            <div class="card recipe-card">
-                <h3>Salmon Salad</h3>
-                <p>Baked salmon over mixed greens with avocado.</p>
-            </div>
-            <div class="card recipe-card">
-                <h3>Overnight Oats</h3>
-                <p>Oats, Greek yogurt, berries, and a drizzle of honey.</p>
-            </div>
+        <div class="card">
+            <h3>Mental Clarity</h3>
+            <p>Brain foods like healthy fats and greens directly improve your focus and daily mood.</p>
         </div>
-    </section>
-        <section id="game">
-<div id="game"></div>
-<script>
-  fetch('healthy eating game.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('header-placeholder').innerHTML = data;
-    });
-</script>
-         </section>
+    </div>
+</section>
 
-    <section class="sources">
-        <h3>Sources & Further Reading</h3>
-        <p>Information on this site is curated based on guidelines from:</p>
+<section id="tips">
+    <h2>Simple Daily Tips</h2>
+    <div class="tip-list">
         <ul>
-            <li><a href="https://who.int" target="_blank">World Health Organization - Healthy Diet</a></li>
-            <li><a href="https://nutrition.gov" target="_blank">Nutrition.gov</a></li>
+            <li>Start your day with a glass of lemon water.</li>
+            <li>Aim for 3 different colors of vegetables at lunch.</li>
+            <li>Swap sugary snacks for raw nuts or fresh fruit.</li>
+            <li>Drink at least 2 liters of water throughout the day.</li>
+            <li>Prep healthy snacks on Sunday to stay on track.</li>
         </ul>
-    </section>
+    </div>
+</section>
 
-    <footer>
-        <p>&copy; 2026 Healthy Eating Advocacy. Choose Health.</p>
-    </footer>
- 
+<section id="recipes">
+    <h2>Quick Recipe Spot</h2>
+    <div class="grid">
+        <div class="card recipe-card">
+            <h3>🟢 Green Smoothie</h3>
+            <p>Spinach, banana, chia seeds, and unsweetened almond milk. Blend and go!</p>
+        </div>
+        <div class="card recipe-card">
+            <h3>🟠 Salmon Salad</h3>
+            <p>Wild-caught baked salmon served over mixed greens with fresh avocado.</p>
+        </div>
+        <div class="card recipe-card">
+            <h3>🟣 Overnight Oats</h3>
+            <p>Rolled oats, Greek yogurt, berries, and a tiny drizzle of raw honey.</p>
+        </div>
+    </div>
+</section>
 
+<section id="game" class="game-section">
+    <h2>Healthy Eating Game</h2>
+    <div id="game-container">
+        <!-- The script below loads your game file -->
+        <div id="game-load-area">Loading interactive content...</div>
+    </div>
+    <script>
+        // Note: fetch() requires the file to be on a web server to work
+        fetch('healthy eating game.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('game-load-area').innerHTML = data;
+            })
+            .catch(err => {
+                document.getElementById('game-load-area').innerHTML = "Game placeholder: Connect your 'healthy eating game.html' file.";
+            });
+    </script>
+</section>
+
+<section class="sources">
+    <h3>Sources & Further Reading</h3>
+    <p>Our advocacy is built on science-backed guidelines from:</p>
+    <ul>
+        <li><a href="https://who.int" target="_blank">World Health Organization - Healthy Diet</a></li>
+        <li><a href="https://nutrition.gov" target="_blank">Nutrition.gov Official Resources</a></li>
+    </ul>
+</section>
+
+<footer>
+    <p>&copy; 2026 Healthy Eating Advocacy. Stay Healthy, Stay Happy.</p>
+</footer>
 
 </body>
 </html>
