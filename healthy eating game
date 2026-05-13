@@ -6,12 +6,12 @@
     <title>Healthy Eating Game</title>
     <style>
         body {
-            text-align: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #e0f7fa;
-            margin: 0;
-            overflow: hidden;
-        }
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e0f7fa;
+    margin: 0;
+}
+
         #game-area {
             width: 100vw;
             height: 80vh;
