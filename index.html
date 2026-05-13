@@ -10,58 +10,227 @@
             --dark: #27ae60;
             --light: #ecf0f1;
             --text: #333;
+            --transition: all 0.3s ease;
         }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; color: var(--text); line-height: 1.6; }
-        header { background: #fff; padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary); }
-        nav a { margin-left: 20px; text-decoration: none; color: var(--text); font-weight: 500; }
-        .hero { background: var(--light); padding: 60px 5%; text-align: center; }
-        .hero h1 { font-size: 2.5rem; color: var(--dark); }
-        .btn { background: var(--primary); color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 20px; }
-        section { padding: 40px 5%; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .card { background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #eee; text-align: center; }
-        footer { background: var(--text); color: #fff; text-align: center; padding: 30px; margin-top: 40px; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            color: var(--text);
+            line-height: 1.6;
+            /* Animation for page load */
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        header {
+            background: #fff;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        nav a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        .hero {
+            background: var(--light);
+            padding: 80px 5%;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 20px;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background: var(--dark);
+            transform: translateY(-2px);
+        }
+
+        section {
+            padding: 60px 5%;
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--dark);
+            margin-bottom: 40px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        /* Card Hover Animation */
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+
+        #tips {
+            background-color: #f9f9f9;
+        }
+
+        .tip-list {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .recipe-card {
+            border-left: 4px solid var(--primary);
+        }
+
+        .sources {
+            background: #333;
+            color: #fff;
+            padding: 30px 5%;
+            font-size: 0.9rem;
+        }
+
+        .sources a {
+            color: var(--primary);
+        }
+
+        footer {
+            background: #2c3e50;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="logo">GreenLife</div>
-    <nav>
-        <a href="#about">About</a>
-        <a href="#tips">Tips</a>
-        <a href="#recipes">Recipes</a>
-    </nav>
-</header>
+    <header>
+        <div class="logo">HealthyEating</div>
+        <nav>
+            <a href="#about">About</a>
+            <a href="#tips">Tips</a>
+            <a href="#recipes">Recipes</a>
+        </nav>
+    </header>
 
-<section class="hero">
-    <h1>Fuel Your Body, Empower Your Life</h1>
-    <p>Join us in advocating for a healthier, more vibrant lifestyle through conscious eating.</p>
-    <a href="#about" class="btn">Learn More</a>
-</section>
+    <section class="hero">
+        <h1>Fuel Your Body, Empower Your Life</h1>
+        <p>Join us in advocating for a healthier, more vibrant lifestyle through conscious eating.</p>
+        <a href="#about" class="btn">Learn More</a>
+    </section>
 
-<section id="about">
-    <h2>Why Choose Healthy Eating?</h2>
-    <div class="grid">
-        <div class="card"><h3>Higher Energy</h3><p>Natural foods provide sustained energy without crashes.</p></div>
-        <div class="card"><h3>Disease Prevention</h3><p>Nutrient-dense foods strengthen your immune system.</p></div>
-        <div class="card"><h3>Mental Clarity</h3><p>Good nutrition directly improves focus and mood.</p></div>
-    </div>
-</section>
+    <section id="about">
+        <h2>Why Choose to Eat Healthy Foods</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>⚡ Higher Energy</h3>
+                <p>Natural foods provide sustained energy without sugar crashes.</p>
+            </div>
+            <div class="card">
+                <h3>🛡️ Disease Prevention</h3>
+                <p>Nutrient-dense foods strengthen your immune system.</p>
+            </div>
+            <div class="card">
+                <h3>🧠 Mental Clarity</h3>
+                <p>Good nutrition directly improves focus and mood.</p>
+            </div>
+        </div>
+    </section>
 
-<section id="tips" style="background-color: #f9f9f9;">
-    <h2>Simple Daily Tips</h2>
-    <ul>
-        <li>Start your day with a glass of lemon water.</li>
-        <li>Aim for 3 different colors of vegetables at lunch.</li>
-        <li>Swap sugary snacks for nuts or fruit.</li>
-    </ul>
-</section>
+    <section id="tips">
+        <h2>Simple Daily Tips</h2>
+        <div class="tip-list">
+            <ul>
+                <li>Start your day with a glass of lemon water.</li>
+                <li>Aim for 3 different colors of vegetables at lunch.</li>
+                <li>Swap sugary snacks for raw nuts or fruit.</li>
+                <li>Drink at least 2 liters of water daily.</li>
+                <li>Prep healthy snacks on Sunday to avoid fast food.</li>
+            </ul>
+        </div>
+    </section>
+    
+    <section id="recipes">
+        <h2>Quick & Healthy Recipe Spot</h2>
+        <div class="grid">
+            <div class="card recipe-card">
+                <h3>Green Smoothie</h3>
+                <p>Spinach, banana, chia seeds, and almond milk.</p>
+            </div>
+            <div class="card recipe-card">
+                <h3>Salmon Salad</h3>
+                <p>Baked salmon over mixed greens with avocado.</p>
+            </div>
+            <div class="card recipe-card">
+                <h3>Overnight Oats</h3>
+                <p>Oats, Greek yogurt, berries, and a drizzle of honey.</p>
+            </div>
+        </div>
+    </section>
 
-<footer>
-    <p>&copy; 2026 Healthy Eating Advocacy. Choose Health.</p>
-</footer>
+    <section class="sources">
+        <h3>Sources & Further Reading</h3>
+        <p>Information on this site is curated based on guidelines from:</p>
+        <ul>
+            <li><a href="https://who.int" target="_blank">World Health Organization - Healthy Diet</a></li>
+            <li><a href="https://nutrition.gov" target="_blank">Nutrition.gov</a></li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Healthy Eating Advocacy. Choose Health.</p>
+    </footer>
 
 </body>
 </html>
