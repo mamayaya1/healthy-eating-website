@@ -284,20 +284,210 @@
 <section id="game" class="game-section">
     <h2>Healthy Eating Game</h2>
     <div id="game-container">
-        <!-- The script below loads your game file -->
-        <div id="game-load-area">Loading interactive content...</div>
+<style>
+    #game-wrapper {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #f1fcf5;
+        border: 3px solid #2ecc71;
+        border-radius: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    #score-board {
+        font-size: 22px;
+        margin-bottom: 10px;
+        color: #27ae60;
+        font-weight: 700;
+    }
+
+    #game-area {
+        width: 100%;
+        height: 450px;
+        background: white;
+        border-radius: 15px;
+        position: relative;
+        overflow: hidden;
+        border: 2px solid #2ecc71;
+    }
+
+    #player {
+        width: 60px;
+        height: 60px;
+        background-color: #27ae60;
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 50%;
+        transition: transform 0.1s linear;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .food {
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        font-size: 32px;
+        line-height: 40px;
+        text-align: center;
+        transition: transform 0.1s linear;
+    }
+
+    #instructions {
+        margin-top: 10px;
+        font-size: 16px;
+        color: #2d3436;
+    }
+</style>
+
+<div id="game-wrapper">
+    <div id="score-board">Score: <span id="score">0</span> | Time: <span id="time">30</span>s</div>
+
+    <div id="game-area">
+        <div id="player"></div>
     </div>
-    <script>
-        // Note: fetch() requires the file to be on a web server to work
-        fetch('healthy eating game.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('game-load-area').innerHTML = data;
-            })
-            .catch(err => {
-                document.getElementById('game-load-area').innerHTML = "Game placeholder: Connect your 'healthy eating game.html' file.";
-            });
-    </script>
+
+    <div id="instructions">
+        Hold ← → to move. Catch healthy food (🍏🍓), avoid junk (🍩🍕)!
+    </div>
+</div>
+
+<script>
+    const player = document.getElementById("player");
+    const gameArea = document.getElementById("game-area");
+    const scoreEl = document.getElementById("score");
+    const timeEl = document.getElementById("time");
+
+    let score = 0;
+    let time = 30;
+    let gameActive = true;
+
+    // Smooth movement variables
+    let playerX = 200;
+    let speed = 0;
+    const maxSpeed = 6;
+    const accel = 0.4;
+    const friction = 0.2;
+    let leftPressed = false;
+    let rightPressed = false;
+
+    const healthyFoods = ["🍎", "🍏", "🍓", "🥕", "🥦", "🍌"];
+    const unhealthyFoods = ["🍩", "🍕", "🍟", "🍔", "🍦"];
+
+    // Key listeners
+    document.addEventListener("keydown", e => {
+        if (e.key === "ArrowLeft") leftPressed = true;
+        if (e.key === "ArrowRight") rightPressed = true;
+    });
+
+    document.addEventListener("keyup", e => {
+        if (e.key === "ArrowLeft") leftPressed = false;
+        if (e.key === "ArrowRight") rightPressed = false;
+    });
+
+    // Smooth movement loop
+    function updatePlayer() {
+        if (!gameActive) return;
+
+        if (leftPressed) speed -= accel;
+        if (rightPressed) speed += accel;
+
+        // Apply friction
+        if (!leftPressed && !rightPressed) {
+            if (speed > 0) speed -= friction;
+            if (speed < 0) speed += friction;
+        }
+
+        // Clamp speed
+        speed = Math.max(-maxSpeed, Math.min(maxSpeed, speed));
+
+        // Update position
+        playerX += speed;
+
+        // Boundaries
+        playerX = Math.max(0, Math.min(gameArea.offsetWidth - 60, playerX));
+
+        player.style.left = playerX + "px";
+
+        requestAnimationFrame(updatePlayer);
+    }
+
+    updatePlayer();
+
+    // Food spawning
+    function spawnFood() {
+        if (!gameActive) return;
+
+        const food = document.createElement("div");
+        food.classList.add("food");
+
+        const isHealthy = Math.random() > 0.4;
+        const list = isHealthy ? healthyFoods : unhealthyFoods;
+
+        food.innerText = list[Math.floor(Math.random() * list.length)];
+        food.dataset.type = isHealthy ? "healthy" : "unhealthy";
+
+        food.style.left = Math.random() * (gameArea.offsetWidth - 40) + "px";
+        food.style.top = "-40px";
+
+        gameArea.appendChild(food);
+
+        let y = -40;
+
+        const fall = setInterval(() => {
+            if (!gameActive) {
+                clearInterval(fall);
+                return;
+            }
+
+            y += 4;
+            food.style.top = y + "px";
+
+            const foodX = parseInt(food.style.left);
+
+            // Collision detection
+            if (
+                y > 360 &&
+                foodX > playerX - 20 &&
+                foodX < playerX + 60
+            ) {
+                if (food.dataset.type === "healthy") score++;
+                else score--;
+
+                scoreEl.textContent = score;
+
+                clearInterval(fall);
+                food.remove();
+            }
+
+            if (y > 450) {
+                clearInterval(fall);
+                food.remove();
+            }
+        }, 20);
+
+        setTimeout(spawnFood, 900);
+    }
+
+    spawnFood();
+
+    // Timer
+    const timer = setInterval(() => {
+        time--;
+        timeEl.textContent = time;
+
+        if (time <= 0) {
+            clearInterval(timer);
+            gameActive = false;
+            alert("Game Over! Your score: " + score);
+        }
+    }, 1000);
+</script>
+
+    </div>
+   
 </section>
 
 <section class="sources">
