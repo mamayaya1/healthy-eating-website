@@ -6,6 +6,23 @@
     <title>Eat Well, Live Better | Healthy Advocacy</title>
     <link rel="icon" type="image/x-icon" <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥗</text></svg>">
     <style>
+
+        .scroll-container {
+  height: 300vh; /* Gives the container enough height to allow scrolling */
+  position: relative;
+}
+
+.sticky-section {
+  height: 100vh; /* Takes up the full screen height */
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f4f4f4;
+}
+
         :root {
             --primary: #2ecc71;
             --dark: #27ae60;
@@ -281,7 +298,7 @@
         </div>
     </div>
 </section>
-
+<div class="scroll-container">
 <section id="game" class="game-section">
     <h2>Healthy Eating Game</h2>
     <div id="game-container">
@@ -356,6 +373,20 @@
 </div>
 
 <script>
+const section = document.getElementById('game');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      console.log('Section is now paused/sticky at the viewport checkpoint!');
+      // You can trigger your game logic, animations, or video playback here
+    }
+  });
+}, { threshold: 0.5 }); // Triggers when 50% of the section is visible
+
+observer.observe(section);
+
+    
     const player = document.getElementById("player");
     const gameArea = document.getElementById("game-area");
     const scoreEl = document.getElementById("score");
@@ -490,7 +521,7 @@
     </div>
    
 </section>
-
+</div>
 <section class="sources">
     <h3>Sources & Further Reading</h3>
     <p>Our advocacy is built on science-backed guidelines from:</p>
