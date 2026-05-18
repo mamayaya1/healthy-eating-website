@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eat Well, Live Better | Healthy Advocacy</title>
-    <link rel="icon" type="image/x-icon" <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥗</text></svg>">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥗</text></svg>">
     <style>
-
-
         :root {
             --primary: #2ecc71;
             --dark: #27ae60;
@@ -150,25 +148,24 @@
 
         #tips { background-color: var(--light); }
 
-       .tip-list {
-    max-width: 100%;
-    width: 100%;
-    margin: 0 auto;
-    background: white;
-    padding: 40px 20px;
-    border-radius: 15px;
-    box-shadow: var(--shadow);
-}
-
+        .tip-list {
+            max-width: 100%;
+            width: 100%;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 20px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
 
         .tip-list ul { list-style: none; padding: 0; }
 
-       .tip-list li {
-    padding: 15px 0;
-    border-bottom: 1px solid #eee;
-    display: block;
-    font-size: 1.1rem;
-}
+        .tip-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            display: block;
+            font-size: 1.1rem;
+        }
 
         .tip-list li::before {
             content: '✓';
@@ -182,20 +179,114 @@
             text-align: left;
         }
 
-        /* Game Section Fix */
+        /* Game Section Layout Styles */
         .game-section { text-align: center; background: #fff; }
+        
         #game-container {
             width: 100%;
-            max-width: 800px;
+            max-width: 600px;
             margin: 0 auto;
-            padding: 20px;
             background: #f1fcf5;
             border: 2px dashed var(--primary);
             border-radius: 20px;
-            min-height: 400px;
+            position: relative;
+            overflow: hidden;
             display: flex;
+            flex-direction: column;
             align-items: center;
+            padding: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        #game-canvas {
+            background: #ffffff;
+            border-radius: 12px;
+            display: block;
+            max-width: 100%;
+            border: 1px solid #e0e0e0;
+            cursor: none;
+        }
+
+        .game-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 10px 10px 10px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--text);
+        }
+
+        /* State Control Screens */
+        .game-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(241, 252, 245, 0.96);
+            display: flex;
+            flex-direction: column;
             justify-content: center;
+            align-items: center;
+            z-index: 10;
+            padding: 20px;
+            transition: var(--transition);
+        }
+
+        .game-overlay.hidden {
+            display: none !important;
+        }
+
+        .game-overlay h3 {
+            font-size: 2rem;
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+        }
+
+        .game-overlay p {
+            font-size: 1.1rem;
+            margin: 0 0 25px 0;
+            color: #636e72;
+        }
+
+        /* Matching Action Buttons */
+        .game-btn {
+            background: var(--primary);
+            color: #fff;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+            font-family: inherit;
+            margin: 5px;
+        }
+
+        .game-btn:hover {
+            background: var(--dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
+        }
+
+        .control-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .game-btn.stop {
+            background: var(--accent);
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.2);
+        }
+
+        .game-btn.stop:hover {
+            background: #c0392b;
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.3);
         }
 
         .sources {
@@ -283,228 +374,168 @@
         </div>
     </div>
 </section>
+
 <section id="game" class="game-section">
     <h2>Healthy Eating Game</h2>
     <div id="game-container">
-<style>
-    #game-wrapper {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
-        background: #f1fcf5;
-        border: 3px solid #2ecc71;
-        border-radius: 20px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    }
+        <!-- Overlay Menu System Screen -->
+        <div id="overlay-screen" class="game-overlay">
+            <h3 id="overlay-title">Catch the Nutrients!</h3>
+            <p id="overlay-desc">Move your mouse or touch the canvas to gather healthy greens. Avoid donuts!</p>
+            <button id="action-btn" class="game-btn">Start Game</button>
+        </div>
 
-    #score-board {
-        font-size: 22px;
-        margin-bottom: 10px;
-        color: #27ae60;
-        font-weight: 700;
-    }
+        <div class="game-bar">
+            <div>Score: <span id="score-val">0</span></div>
+            <div>Lives: <span id="lives-val">3</span></div>
+        </div>
 
-    #game-area {
-        width: 100%;
-        height: 450px;
-        background: white;
-        border-radius: 15px;
-        position: relative;
-        overflow: hidden;
-        border: 2px solid #2ecc71;
-    }
+        <canvas id="game-canvas" width="500" height="400"></canvas>
 
-    #player {
-        width: 60px;
-        height: 60px;
-        background-color: #27ae60;
-        position: absolute;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        border-radius: 50%;
-        transition: transform 0.1s linear;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    }
-
-    .food {
-        width: 40px;
-        height: 40px;
-        position: absolute;
-        font-size: 32px;
-        line-height: 40px;
-        text-align: center;
-        transition: transform 0.1s linear;
-    }
-
-    #instructions {
-        margin-top: 10px;
-        font-size: 16px;
-        color: #2d3436;
-    }
-</style>
-
-<div id="game-wrapper">
-    <div id="score-board">Score: <span id="score">0</span> | Time: <span id="time">30</span>s</div>
-
-    <div id="game-area">
-        <div id="player"></div>
+        <div class="control-row">
+            <button id="stop-btn" class="game-btn stop">Stop Game</button>
+            <button id="restart-btn" class="game-btn">Restart</button>
+        </div>
     </div>
-
-    <div id="instructions">
-        Hold ← → to move. Catch healthy food (🍏🍓), avoid junk (🍩🍕)!
-    </div>
-</div>
-
-<script>
-    
-    const player = document.getElementById("player");
-    const gameArea = document.getElementById("game-area");
-    const scoreEl = document.getElementById("score");
-    const timeEl = document.getElementById("time");
-
-    let score = 0;
-    let time = 30;
-    let gameActive = true;
-
-    // Smooth movement variables
-    let playerX = 200;
-    let speed = 0;
-    const maxSpeed = 6;
-    const accel = 0.4;
-    const friction = 0.2;
-    let leftPressed = false;
-    let rightPressed = false;
-
-    const healthyFoods = ["🍎", "🍏", "🍓", "🥕", "🥦", "🍌"];
-    const unhealthyFoods = ["🍩", "🍕", "🍟", "🍔", "🍦"];
-
-    // Key listeners
-    document.addEventListener("keydown", e => {
-        if (e.key === "ArrowLeft") leftPressed = true;
-        if (e.key === "ArrowRight") rightPressed = true;
-    });
-
-    document.addEventListener("keyup", e => {
-        if (e.key === "ArrowLeft") leftPressed = false;
-        if (e.key === "ArrowRight") rightPressed = false;
-    });
-
-    // Smooth movement loop
-    function updatePlayer() {
-        if (!gameActive) return;
-
-        if (leftPressed) speed -= accel;
-        if (rightPressed) speed += accel;
-
-        // Apply friction
-        if (!leftPressed && !rightPressed) {
-            if (speed > 0) speed -= friction;
-            if (speed < 0) speed += friction;
-        }
-
-        // Clamp speed
-        speed = Math.max(-maxSpeed, Math.min(maxSpeed, speed));
-
-        // Update position
-        playerX += speed;
-
-        // Boundaries
-        playerX = Math.max(0, Math.min(gameArea.offsetWidth - 60, playerX));
-
-        player.style.left = playerX + "px";
-
-        requestAnimationFrame(updatePlayer);
-    }
-
-    updatePlayer();
-
-    // Food spawning
-    function spawnFood() {
-        if (!gameActive) return;
-
-        const food = document.createElement("div");
-        food.classList.add("food");
-
-        const isHealthy = Math.random() > 0.4;
-        const list = isHealthy ? healthyFoods : unhealthyFoods;
-
-        food.innerText = list[Math.floor(Math.random() * list.length)];
-        food.dataset.type = isHealthy ? "healthy" : "unhealthy";
-
-        food.style.left = Math.random() * (gameArea.offsetWidth - 40) + "px";
-        food.style.top = "-40px";
-
-        gameArea.appendChild(food);
-
-        let y = -40;
-
-        const fall = setInterval(() => {
-            if (!gameActive) {
-                clearInterval(fall);
-                return;
-            }
-
-            y += 4;
-            food.style.top = y + "px";
-
-            const foodX = parseInt(food.style.left);
-
-            // Collision detection
-            if (
-                y > 360 &&
-                foodX > playerX - 20 &&
-                foodX < playerX + 60
-            ) {
-                if (food.dataset.type === "healthy") score++;
-                else score--;
-
-                scoreEl.textContent = score;
-
-                clearInterval(fall);
-                food.remove();
-            }
-
-            if (y > 450) {
-                clearInterval(fall);
-                food.remove();
-            }
-        }, 20);
-
-        setTimeout(spawnFood, 900);
-    }
-
-    spawnFood();
-
-    // Timer
-    const timer = setInterval(() => {
-        time--;
-        timeEl.textContent = time;
-
-        if (time <= 0) {
-            clearInterval(timer);
-            gameActive = false;
-            alert("Game Over! Your score: " + score);
-        }
-    }, 1000);
-</script>
-
- 
-   
 </section>
+
+<div class="sources">
+    <h3>Sources & References</h3>
+    <p>Information adapted from verified health organizations. Learn more at the <a href="https://who.int" target="_blank">WHO official portal</a>.</p>
 </div>
-<section class="sources">
-    <h3>Sources & Further Reading</h3>
-    <p>Our advocacy is built on science-backed guidelines from:</p>
-    <ul>
-        <li><a href="https://who.int" target="_blank">World Health Organization - Healthy Diet</a></li>
-        <li><a href="https://nutrition.gov" target="_blank">Nutrition.gov Official Resources</a></li>
-    </ul>
-</section>
 
 <footer>
-    <p>&copy; 2026 Healthy Eating Advocacy. Stay Healthy, Stay Happy.</p>
+    <p>&copy; 2026 HealthyEating Advocacy. All rights reserved.</p>
 </footer>
+
+<script>
+    const canvas = document.getElementById('game-canvas');
+    const ctx = canvas.getContext('2d');
+    const overlayScreen = document.getElementById('overlay-screen');
+    const overlayTitle = document.getElementById('overlay-title');
+    const overlayDesc = document.getElementById('overlay-desc');
+    const actionBtn = document.getElementById('action-btn');
+    const stopBtn = document.getElementById('stop-btn');
+    const restartBtn = document.getElementById('restart-btn');
+    const scoreVal = document.getElementById('score-val');
+    const livesVal = document.getElementById('lives-val');
+
+    let score = 0;
+    let lives = 3;
+    let isPlaying = false;
+    let animationId = null;
+    let items = [];
+    let spawnTimer = 0;
+
+    const player = {
+        x: 210,
+        y: 365,
+        width: 80,
+        height: 20,
+        color: '#27ae60'
+    };
+
+    function setPlayerPosition(e) {
+        const rect = canvas.getBoundingClientRect();
+        const rootX = e.touches ? e.touches[0].clientX : e.clientX;
+        player.x = Math.max(0, Math.min(canvas.width - player.width, (rootX - rect.left) - player.width / 2));
+    }
+    canvas.addEventListener('mousemove', setPlayerPosition);
+    canvas.addEventListener('touchmove', setPlayerPosition, { passive: true });
+
+    function spawnItem() {
+        const types = [
+            { icon: '🥦', pts: 10, g: true }, 
+            { icon: '🍎', pts: 10, g: true }, 
+            { icon: '🍩', pts: 0, g: false }
+        ];
+        const chosen = types[Math.floor(Math.random() * types.length)];
+        items.push({
+            x: Math.random() * 440 + 30,
+            y: -20,
+            speed: Math.random() * 2 + 2 + (score * 0.01),
+            ...chosen
+        });
+    }
+
+    function updateGame() {
+        if (!isPlaying) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.fillStyle = player.color;
+        ctx.beginPath();
+        ctx.roundRect(player.x, player.y, player.width, player.height, 10);
+        ctx.fill();
+
+        spawnTimer++;
+        if (spawnTimer % 50 === 0) spawnItem();
+
+        for (let i = items.length - 1; i >= 0; i--) {
+            const item = items[i];
+            item.y += item.speed;
+            ctx.font = "24px Segoe UI";
+            ctx.textAlign = "center";
+            ctx.fillText(item.icon, item.x, item.y);
+
+            if (item.y >= player.y && item.y <= player.y + player.height && item.x >= player.x && item.x <= player.x + player.width) {
+                if (item.g) { 
+                    score += item.pts; 
+                } else { 
+                    lives--; 
+                }
+                scoreVal.innerText = score;
+                livesVal.innerText = lives;
+                items.splice(i, 1);
+                if (lives <= 0) endGameRound();
+                continue;
+            }
+            if (item.y > canvas.height + 20) items.splice(i, 1);
+        }
+        animationId = requestAnimationFrame(updateGame);
+    }
+
+    function runStart() {
+        isPlaying = true;
+        overlayScreen.classList.add('hidden');
+        if (!animationId) updateGame();
+    }
+
+    function runStop() {
+        isPlaying = false;
+        cancelAnimationFrame(animationId);
+        animationId = null;
+        overlayTitle.innerText = "Game Paused";
+        overlayDesc.innerText = `Active Score: ${score}`;
+        actionBtn.innerText = "Resume Session";
+        overlayScreen.classList.remove('hidden');
+    }
+
+    function runRestart() {
+        cancelAnimationFrame(animationId);
+        animationId = null;
+        score = 0;
+        lives = 3;
+        items = [];
+        spawnTimer = 0;
+        scoreVal.innerText = score;
+        livesVal.innerText = lives;
+        runStart();
+    }
+
+    function endGameRound() {
+        isPlaying = false;
+        cancelAnimationFrame(animationId);
+        animationId = null;
+        overlayTitle.innerText = "Round Over!";
+        overlayDesc.innerText = `Final Score: ${score}`;
+        actionBtn.innerText = "Play Again";
+        overlayScreen.classList.remove('hidden');
+    }
+
+    actionBtn.addEventListener('click', runStart);
+    stopBtn.addEventListener('click', runStop);
+    restartBtn.addEventListener('click', runRestart);
+</script>
 
 </body>
 </html>
